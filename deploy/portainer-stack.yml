@@ -1,9 +1,8 @@
 # Fixi – Portainer-Stack (Stacks → Add stack → Web editor → diesen Inhalt einfügen)
 #
 # Voraussetzungen:
-#   1. Das Image baut GitHub Actions: ghcr.io/chrschick/fixi-fixkosten
-#      Das Paket einmalig auf GitHub auf "Public" stellen oder in Portainer
-#      unter Registries einen Zugang für ghcr.io hinterlegen.
+#   1. Das Image baut GitHub Actions: ghcr.io/chrschick/fixi-fixkosten (öffentlich).
+#      :latest gibt es erst nach einem Push auf master, bis dahin FIXI_TAG=develop.
 #   2. Datenbank und Benutzer existieren in der MariaDB (SQL steht im README).
 #   3. Im Stack unter "Environment variables" setzen:
 #        FIXI_NETWORK   Docker-Netzwerk, in dem cloudflared und MariaDB hängen

@@ -136,13 +136,14 @@ FLUSH PRIVILEGES;
 Der Host `%` ist nötig, weil sich die IP des Fixi-Containers ändern kann. Die
 Tabellen legt Fixi beim Start selbst an.
 
-### 2. Image freigeben (einmalig)
+### 2. Image-Tag wählen
 
-GHCR legt ein neues Paket privat an, auch bei öffentlichem Repository. Nach dem
-ersten erfolgreichen Workflow-Lauf: GitHub → Profil → Packages →
-`fixi-fixkosten` → Package settings → Change visibility → Public.
-Alternativ in Portainer unter Registries `ghcr.io` mit einem Personal Access
-Token (Recht `read:packages`) hinterlegen.
+Das Image ist öffentlich und lässt sich ohne Registry-Zugang ziehen. `latest`
+existiert erst nach dem ersten Push auf `master`. Bis dahin im Stack
+`FIXI_TAG=develop` setzen.
+
+Meldet Portainer beim Pull „denied“ oder „unauthorized“, unter GitHub → Packages →
+`fixi-fixkosten` → Package settings die Sichtbarkeit auf Public stellen.
 
 ### 3. Stack in Portainer anlegen
 
