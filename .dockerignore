@@ -1,0 +1,20 @@
+node_modules
+dist
+dist-server
+.env
+.env.*
+!.env.example
+.git
+.github
+.vscode
+deploy
+*.log
+*.local
+*.tsbuildinfo
+*.xlsx
+cells.txt
+xlsx-out.*
+Fixi starten.bat
+scripts
+Dockerfile
+.dockerignore

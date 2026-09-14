@@ -275,11 +275,16 @@ button {
   align-items: center;
   gap: 10px;
 }
+/* Icons auf dem dezent getönten Meta-Header: Textfarbe des Themes
+   (Light: schwarz, Dark: weiß) statt fest weiß. */
 .meta-group-head .btn-icon {
-  color: #fff;
+  color: var(--text);
+}
+.meta-group-head .btn-icon.danger {
+  color: var(--danger);
 }
 .meta-group-head .btn-icon:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(127, 127, 127, 0.18);
 }
 .meta-group-head .btn-icon:disabled {
   opacity: 0.5;
@@ -478,6 +483,7 @@ button {
 }
 
 input[type='text'],
+input[type='password'],
 input[type='number'],
 input[type='color'],
 select,
@@ -881,6 +887,131 @@ select:focus,
 .error-box {
   background: rgba(239, 68, 68, 0.12);
   color: #991b1b;
+}
+:root[data-theme='dark'] .warn-box {
+  color: #fcd34d;
+}
+:root[data-theme='dark'] .error-box {
+  color: #fca5a5;
+}
+
+/* ---- Login ---- */
+.welcome-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.welcome-head h1 {
+  margin: 0;
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+.login-form .btn-primary {
+  justify-content: center;
+  padding: 10px 14px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.field input {
+  color: var(--text);
+}
+
+/* ---- Superadmin-Panel ---- */
+.admin-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-2);
+}
+.panel-head h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.panel-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.form-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+.form-row .field {
+  flex: 1;
+  min-width: 200px;
+}
+.input-with-btn {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.input-with-btn input {
+  flex: 1;
+  min-width: 0;
+}
+.notice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--good);
+  font-size: 14px;
+}
+.notice code {
+  font-weight: 600;
+  user-select: all;
+  background: var(--panel);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.actions-inline {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.admin-main .items-table td {
+  padding: 8px 10px;
+}
+.admin-main .items-table .td-actions {
+  width: auto;
+}
+.actions-inline .reset-input {
+  width: 200px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 /* ---- Status badge ---- */
