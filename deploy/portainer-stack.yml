@@ -1,0 +1,62 @@
+# Fixi – Portainer-Stack (Stacks → Add stack → Web editor → diesen Inhalt einfügen)
+#
+# Voraussetzungen:
+#   1. Das Image baut GitHub Actions: ghcr.io/chrschick/fixi-fixkosten
+#      Das Paket einmalig auf GitHub auf "Public" stellen oder in Portainer
+#      unter Registries einen Zugang für ghcr.io hinterlegen.
+#   2. Datenbank und Benutzer existieren in der MariaDB (SQL steht im README).
+#   3. Im Stack unter "Environment variables" setzen:
+#        FIXI_NETWORK   Docker-Netzwerk, in dem cloudflared und MariaDB hängen
+#        DB_HOST        Container-Name der MariaDB, z.B. mariadb
+#        DB_PASSWORD    Passwort des DB-Benutzers
+#        SA_PASSWORD    Superadmin-Passwort (Login unter /sa)
+#      Optional: FIXI_TAG (latest oder develop), DB_PORT, DB_NAME, DB_USER, SA_USERNAME
+#      Passwörter dort eintragen, nicht in diese Datei.
+#
+# Cloudflare Zero Trust → Networks → Tunnels → Public Hostname:
+#   fixi.schick.digital  →  Service http://fixi:5174
+#
+# Update auf eine neue Version: Stack → "Update the stack" mit "Re-pull image".
+
+services:
+  fixi:
+    image: ghcr.io/chrschick/fixi-fixkosten:${FIXI_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-fixi}
+      DB_USER: ${DB_USER:-fixi}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SA_USERNAME: ${SA_USERNAME:-schick}
+      SA_PASSWORD: ${SA_PASSWORD}
+      TRUST_PROXY: "1"
+      # Cloudflare liefert immer HTTPS aus. Über http://<server-ip> klappt der
+      # Login deshalb nicht; zum Testen ohne Tunnel auf "false" stellen.
+      COOKIE_SECURE: "true"
+    networks:
+      - fixi-net
+    # Keine Ports nach außen: erreichbar nur über das Docker-Netzwerk.
+    #
+    # Variante: cloudflared läuft direkt auf dem Host statt als Container.
+    # Dann aktivieren und im Tunnel http://localhost:5174 eintragen:
+    # ports:
+    #   - "127.0.0.1:5174:5174"
+    #
+    # Variante: MariaDB läuft direkt auf dem Host. Dann DB_HOST=host.docker.internal
+    # setzen und aktivieren (MariaDB muss auf der Docker-Bridge lauschen):
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+
+networks:
+  fixi-net:
+    external: true
+    name: ${FIXI_NETWORK}
+
+# Variante: cloudflared und MariaDB hängen in verschiedenen Netzwerken.
+# Dann ein zweites externes Netzwerk ergänzen:
+#   services → fixi → networks: [fixi-net, db-net]
+#   networks:
+#     db-net:
+#       external: true
+#       name: <netzwerk-der-mariadb>

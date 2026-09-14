@@ -1,7 +1,10 @@
 node_modules
 dist
+dist-server
 dist-ssr
 *.local
+*.tsbuildinfo
+.env
 .vscode/*
 !.vscode/extensions.json
 .DS_Store

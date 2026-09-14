@@ -1,17 +1,15 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import { viteSingleFile } from 'vite-plugin-singlefile'
 
 export default defineConfig({
-  plugins: [react(), viteSingleFile()],
-  base: './',
+  plugins: [react()],
+  server: {
+    // API-Server (yarn dev:server) – Cookies bleiben so same-origin
+    proxy: { '/api': 'http://127.0.0.1:5174' },
+  },
   build: {
     target: 'es2020',
-    cssCodeSplit: false,
-    assetsInlineLimit: 100000000,
-    chunkSizeWarningLimit: 100000000,
-    rollupOptions: {
-      output: { inlineDynamicImports: true },
-    },
+    outDir: 'dist',
+    emptyOutDir: true,
   },
 })
